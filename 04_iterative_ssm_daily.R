@@ -482,47 +482,13 @@ run_iterative_ssm_daily <- function(targets_processed,
       n_members     = n_members
     )
     
-    # Save fit diagnostics on initial/refit run
-    # p_fit <- plot_dlm_fit(posterior_df, response_var)
-    # ggplot2::ggsave(
-    #   file.path(out_dir, paste0("ssm_fit_", tag, ".png")),
-    #   p_fit, width = 12, height = 5.5, dpi = 160
-    # )
-    # 
-    # saveRDS(
-    #   list(
-    #     prepped      = prepped,
-    #     posterior    = posterior_df,
-    #     samples      = fit$samples,
-    #     restart_init = restart_state
-    #   ),
-    #   file.path(out_dir, paste0("ssm_fit_object_", tag, ".rds"))
-    # )
-    
     draws <- as.matrix(fit$samples)
     param_cols <- c("beta0", "beta_x", "beta_s1", "beta_c1",
                     "beta_s2", "beta_c2", "sigma_obs", "sigma_proc")
     
-  #   param_table <- t(apply(draws[, param_cols, drop = FALSE], 2, function(x) {
-  #     c(
-  #       Mean    = round(mean(x), 4),
-  #       SD      = round(sd(x), 4),
-  #       `2.5%`  = round(quantile(x, 0.025), 4),
-  #       `50%`   = round(quantile(x, 0.500), 4),
-  #       `97.5%` = round(quantile(x, 0.975), 4)
-  #     )
-  #   })) %>%
-  #     as.data.frame() %>%
-  #     tibble::rownames_to_column("parameter_name")
-  #   
-  #   readr::write_csv(
-  #     param_table,
-  #     file.path(out_dir, paste0("ssm_param_table_", tag, ".csv"))
-  #   )
-  #   
-  # } else {
-  #   message("Restart state found. Continue forecasting from saved state.")
-  # }
+  } else {
+    message("Restart state found. Continue forecasting from saved state.")
+  }
   
   forecast <- forecast_from_restart_state(
     restart_state = restart_state,
