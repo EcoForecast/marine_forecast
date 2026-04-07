@@ -19,6 +19,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          
+      - name: Fix git safe directory
+        run: git config --global --add safe.directory /__w/marine_forecast/marine_forecast
 
       - name: Install R packages
         run: R -e 'source("install.R")'
