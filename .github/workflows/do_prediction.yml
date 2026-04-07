@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Fix git safe directory
+      - name: Mark repo as safe for git
         run: git config --global --add safe.directory /__w/marine_forecast/marine_forecast
 
       - name: Install R packages
