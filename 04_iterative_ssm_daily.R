@@ -544,7 +544,7 @@ run_iterative_ssm_daily <- function(targets_processed,
     do_submit     = do_submit
   )
   
-  message("Local forecast saved to: ", forecast_file_local)
+  # message("Local forecast saved to: ", forecast_file_local)
   message("Submission-format forecast saved to: ", forecast_file_submit)
   
   invisible(list(
