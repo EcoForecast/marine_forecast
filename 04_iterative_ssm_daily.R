@@ -483,46 +483,46 @@ run_iterative_ssm_daily <- function(targets_processed,
     )
     
     # Save fit diagnostics on initial/refit run
-    p_fit <- plot_dlm_fit(posterior_df, response_var)
-    ggplot2::ggsave(
-      file.path(out_dir, paste0("ssm_fit_", tag, ".png")),
-      p_fit, width = 12, height = 5.5, dpi = 160
-    )
-    
-    saveRDS(
-      list(
-        prepped      = prepped,
-        posterior    = posterior_df,
-        samples      = fit$samples,
-        restart_init = restart_state
-      ),
-      file.path(out_dir, paste0("ssm_fit_object_", tag, ".rds"))
-    )
+    # p_fit <- plot_dlm_fit(posterior_df, response_var)
+    # ggplot2::ggsave(
+    #   file.path(out_dir, paste0("ssm_fit_", tag, ".png")),
+    #   p_fit, width = 12, height = 5.5, dpi = 160
+    # )
+    # 
+    # saveRDS(
+    #   list(
+    #     prepped      = prepped,
+    #     posterior    = posterior_df,
+    #     samples      = fit$samples,
+    #     restart_init = restart_state
+    #   ),
+    #   file.path(out_dir, paste0("ssm_fit_object_", tag, ".rds"))
+    # )
     
     draws <- as.matrix(fit$samples)
     param_cols <- c("beta0", "beta_x", "beta_s1", "beta_c1",
                     "beta_s2", "beta_c2", "sigma_obs", "sigma_proc")
     
-    param_table <- t(apply(draws[, param_cols, drop = FALSE], 2, function(x) {
-      c(
-        Mean    = round(mean(x), 4),
-        SD      = round(sd(x), 4),
-        `2.5%`  = round(quantile(x, 0.025), 4),
-        `50%`   = round(quantile(x, 0.500), 4),
-        `97.5%` = round(quantile(x, 0.975), 4)
-      )
-    })) %>%
-      as.data.frame() %>%
-      tibble::rownames_to_column("parameter_name")
-    
-    readr::write_csv(
-      param_table,
-      file.path(out_dir, paste0("ssm_param_table_", tag, ".csv"))
-    )
-    
-  } else {
-    message("Restart state found. Continue forecasting from saved state.")
-  }
+  #   param_table <- t(apply(draws[, param_cols, drop = FALSE], 2, function(x) {
+  #     c(
+  #       Mean    = round(mean(x), 4),
+  #       SD      = round(sd(x), 4),
+  #       `2.5%`  = round(quantile(x, 0.025), 4),
+  #       `50%`   = round(quantile(x, 0.500), 4),
+  #       `97.5%` = round(quantile(x, 0.975), 4)
+  #     )
+  #   })) %>%
+  #     as.data.frame() %>%
+  #     tibble::rownames_to_column("parameter_name")
+  #   
+  #   readr::write_csv(
+  #     param_table,
+  #     file.path(out_dir, paste0("ssm_param_table_", tag, ".csv"))
+  #   )
+  #   
+  # } else {
+  #   message("Restart state found. Continue forecasting from saved state.")
+  # }
   
   forecast <- forecast_from_restart_state(
     restart_state = restart_state,
@@ -549,24 +549,24 @@ run_iterative_ssm_daily <- function(targets_processed,
     )
   
   # local forecast
-  forecast_file_local <- file.path(
-    out_dir,
-    paste0("forecast_", tag, ".csv")
-  )
-  readr::write_csv(forecast_out, forecast_file_local)
+  # forecast_file_local <- file.path(
+  #   out_dir,
+  #   paste0("forecast_", tag, ".csv")
+  # )
+  # readr::write_csv(forecast_out, forecast_file_local)
   
   # summary and plot
   fc_summary <- summarize_forecast(forecast_out)
-  readr::write_csv(
-    fc_summary,
-    file.path(out_dir, paste0("forecast_summary_", tag, ".csv"))
-  )
+  # readr::write_csv(
+  #   fc_summary,
+  #   file.path(out_dir, paste0("forecast_summary_", tag, ".csv"))
+  # )
   
-  p_fc <- plot_forecast_summary(fc_summary, response_var, forecast_date)
-  ggplot2::ggsave(
-    file.path(out_dir, paste0("ssm_forecast_", tag, ".png")),
-    p_fc, width = 10, height = 5, dpi = 160
-  )
+  # p_fc <- plot_forecast_summary(fc_summary, response_var, forecast_date)
+  # ggplot2::ggsave(
+  #   file.path(out_dir, paste0("ssm_forecast_", tag, ".png")),
+  #   p_fc, width = 10, height = 5, dpi = 160
+  # )
   
   # Format EFI challenge file and submit
   forecast_file_submit <- write_and_submit_forecast(
