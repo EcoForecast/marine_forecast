@@ -24,7 +24,7 @@ jobs:
         run: R -e 'source("install.R")'
 
       - name: Run automatic prediction file
-        run: Rscript 04_RUNNER.R
+        run: Rscript 05_runner.R
 
       - name: Commit restart state and outputs
         run: |
