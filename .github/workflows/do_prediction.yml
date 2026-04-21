@@ -31,6 +31,6 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add outputs/advanced_ssm/
+          git add outputs/advanced_enkf/
           git diff --cached --quiet || git commit -m "Update forecast outputs and restart states"
           git push origin HEAD:main
