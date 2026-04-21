@@ -39,3 +39,7 @@ vignettes/*.pdf
 .Renviron
 
 drivers
+outputs/advanced_ssm/ssm_fit_object_*.rds
+outputs/advanced_ssm/*.png
+outputs/advanced_ssm/ssm_fit_object_*.rds
+outputs/advanced_ssm/*.png

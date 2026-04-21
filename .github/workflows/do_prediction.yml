@@ -1,22 +1,36 @@
+name: daily-forecast
+
 on:
   workflow_dispatch:
-  #schedule:
-  #- cron: "0 20 * * *"
-#  push:
+  schedule:
+    - cron: "0 20 * * *"
 
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     container:
       image: eco4cast/rocker-neon4cast
+
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: install R packages
-        run: R -e 'source("install.R")' 
-# Point to the right path, run the right Rscript command
+
+      - name: Install R packages
+        run: R -e 'source("install.R")'
+
       - name: Run automatic prediction file
-        run: Rscript 04_RUNNER.R
+        run: Rscript 05_runner.R
+
+      - name: Commit restart state and outputs
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add outputs/advanced_ssm/
+          git diff --cached --quiet || git commit -m "Update forecast outputs and restart states"
+          git push origin HEAD:main

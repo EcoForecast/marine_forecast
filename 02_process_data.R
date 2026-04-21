@@ -32,3 +32,6 @@ process_targets <- function(target) {
     target_wide_daily = target_wide_daily
   )
 }
+
+
+#### test
