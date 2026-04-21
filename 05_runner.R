@@ -20,7 +20,7 @@ res_daily <- run_iterative_enkf_daily(
   targets_processed = targets_processed,
   site_select       = 1,
   response_var      = "chlora_cci",
-  forecast_date     = as.Date("2026-02-01"),
+  forecast_date     = Sys.Date(),
   horizon_days      = 30L,
   n_members         = 31L,
   out_dir           = "outputs/advanced_enkf",
