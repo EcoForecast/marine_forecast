@@ -457,10 +457,8 @@ update_restart_with_today_obs_enkf <- function(restart_state,
   }
   
   # Consistency check
-  if (!isTRUE(all.equal(restart_state$y_center[1], prepped$y_center, tolerance = 1e-08)))
-    
-  if (!isTRUE(all.equal(restart_state$y_scale[1], prepped$y_scale, tolerance = 1e-8))) {
-    warning("restart_state y_scale differs from current prepped y_scale.")
+  if (!isTRUE(all.equal(restart_state$y_center[1], prepped$y_center, tolerance = 1e-08))) {
+  warning("restart_state y_center differs from current prepped y_center.")
   }
   
   params <- list(
